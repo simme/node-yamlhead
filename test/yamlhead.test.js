@@ -46,7 +46,6 @@ suite('YAMLHead', function () {
     });
     file.on('data', function (data) {
       buff += data;
-      console.log('hey');
     });
     file.on('end', function () {
       assert(header.title, 'YAMLHead Rocks');
