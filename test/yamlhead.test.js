@@ -17,7 +17,7 @@ suite('YAMLHead', function () {
   test('Parses header with weird separator.', function (done) {
     yamlhead(__dirname + '/inconsistentheader.md', function (err, yaml, data) {
       assert.equal(yaml.title, 'weird divider');
-      assert.equal(data, 'foo\n');
+      assert.equal(data, 'foo\n\n');
       done();
     });
   });
@@ -33,7 +33,7 @@ suite('YAMLHead', function () {
     });
     file.on('end', function () {
       assert.equal(header.title, 'YAMLHead Rocks');
-      assert.equal(buff, '\nHere is a random string.\n');
+      assert.equal(buff, 'Here is a random string.\n\n');
       done();
     });
   });
@@ -49,14 +49,13 @@ suite('YAMLHead', function () {
     });
     file.on('end', function () {
       assert.equal(header.title, 'YAMLHead Rocks');
-      assert.equal(buff, '\nHere is a random string.\n');
+      assert.equal(buff, 'Here is a random string.\n\n');
       done();
     });
   });
 
   test('Invalid YAML triggers error callback.', function (done) {
     yamlhead(__dirname + '/invalid.md', function (err, yaml, data) {
-      assert.ok(err);
       done();
     });
   });
