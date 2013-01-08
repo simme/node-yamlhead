@@ -29,6 +29,7 @@ var YAMLHead = function (path, options, callback) {
   this.header   = false;
   this.data     = '';
   this._sep     = /(\s*?\-+\s*\n)/g;
+  this._ended   = false;
 
   fs.createReadStream(this.path, this.options).pipe(this);
 };
@@ -76,6 +77,8 @@ YAMLHead.prototype.write = function(data) {
 // `.pipe()` will call this function. Kinda.
 //
 YAMLHead.prototype.end = function() {
+  if (this._ended) return;
+  this._ended = true;
   this.emit('end');
   if (this.callback) {
     this.callback(null, this.header, this.data);
