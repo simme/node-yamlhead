@@ -30,6 +30,7 @@ var YAMLHead = function (path, options, callback) {
   this.data     = '';
   this._sep     = /(\s*?\-+\s*\n)/g;
   this._ended   = false;
+  this._err     = false;
 
   fs.createReadStream(this.path, this.options).pipe(this);
 };
@@ -56,10 +57,13 @@ YAMLHead.prototype.write = function(data) {
         this.emit('data', this.data);
       }
       catch (err) {
+        this._err = err;
         if (this.callback) {
           this.callback(err);
         }
-        this.emit('error', err);
+        else {
+          this.emit('error', err);
+        }
         this.end();
         this.emit('end');
       }
@@ -80,7 +84,7 @@ YAMLHead.prototype.end = function() {
   if (this._ended) return;
   this._ended = true;
   this.emit('end');
-  if (this.callback) {
+  if (this.callback && !this._err) {
     this.callback(null, this.header, this.data);
   }
 };
