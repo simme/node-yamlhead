@@ -8,16 +8,16 @@ var yamlhead = require('./../yamlhead');
 suite('YAMLHead', function () {
   test('Parses simple header correctly.', function (done) {
     yamlhead(__dirname + '/test.md', function (err, yaml, data) {
-      assert(yaml.title, 'YAMLHead Rocks');
-      assert(yaml.tags.length, 5);
+      assert.equal(yaml.title, 'YAMLHead Rocks');
+      assert.equal(yaml.tags.length, 5);
       done();
     });
   });
 
   test('Parses header with weird separator.', function (done) {
     yamlhead(__dirname + '/inconsistentheader.md', function (err, yaml, data) {
-      assert(yaml.title, 'weird divider');
-      assert(data, 'foo\n');
+      assert.equal(yaml.title, 'weird divider');
+      assert.equal(data, 'foo\n');
       done();
     });
   });
@@ -32,8 +32,8 @@ suite('YAMLHead', function () {
       buff += data;
     });
     file.on('end', function () {
-      assert(header.title, 'YAMLHead Rocks');
-      assert(buff, '\nHere is a random string.\n');
+      assert.equal(header.title, 'YAMLHead Rocks');
+      assert.equal(buff, '\nHere is a random string.\n');
       done();
     });
   });
@@ -48,8 +48,15 @@ suite('YAMLHead', function () {
       buff += data;
     });
     file.on('end', function () {
-      assert(header.title, 'YAMLHead Rocks');
-      assert(buff, '\nHere is a random string.\n');
+      assert.equal(header.title, 'YAMLHead Rocks');
+      assert.equal(buff, '\nHere is a random string.\n');
+      done();
+    });
+  });
+
+  test('Invalid YAML triggers error callback.', function (done) {
+    yamlhead(__dirname + '/invalid.md', function (err, yaml, data) {
+      assert.ok(err);
       done();
     });
   });
