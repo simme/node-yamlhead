@@ -44,6 +44,29 @@ yamlhead('path/to/file.md', function (err, yaml, data) {
 
 Very simple!
 
+# Streams!!
+
+What would a node module be without streams!? `yamlhead()` returns a stream
+object!
+
+```js
+var yamlhead = require('yamlhead');
+// Optional second arg is an object the options passed to `fs.crateReadStream()`
+var stream = yamlhead('file.md', {stream: 'options'});
+stream.on('header', function (header) {
+  console.log(header); // <- Parsed YAML header
+});
+stream.on('data', function (data) {
+  console.log(data.toString()); // <- The rest of the file comes in data events
+});
+stream.on('end', function () {
+  console.log('Read entire file!!');
+});
+stream.on('error', function (err) {
+  console.log(err); // <- YAML parse error most likely, unless path was invalid
+});
+```
+
 # License
 
 ISC
