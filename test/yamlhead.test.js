@@ -53,5 +53,12 @@ suite('YAMLHead', function () {
       done();
     });
   });
+
+  test('Invalid YAML triggers error callback.', function (done) {
+    var foo = yamlhead(__dirname + '/invalid.md', function (err, yaml, data) {
+      assert(err);
+      done();
+    });
+  });
 });
 
