@@ -1,0 +1,24 @@
+{
+  "name": "yamlhead",
+  "version": "0.0.0",
+  "description": "Extract YAML headers from random (not really random) files.",
+  "main": "yamlhead.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": "",
+  "keywords": [
+    "yaml",
+    "header",
+    "jekyll"
+  ],
+  "author": "Simon Ljungberg <hi@iamsim.me>",
+  "license": "ISC",
+  "dependencies": {
+    "js-yaml": "*"
+  },
+  "devDependencies": {
+    "mocha": "1.0.3",
+    "docco": "*"
+  }
+}
