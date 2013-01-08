@@ -28,7 +28,7 @@ var YAMLHead = function (path, options, callback) {
   this.path     = path;
   this.header   = false;
   this.data     = '';
-  this._sep     = /\s*?\-+\s*?/g;
+  this._sep     = /(\s*?\-+\s*\n)/g;
 
   fs.createReadStream(this.path, this.options).pipe(this);
 };
@@ -47,19 +47,20 @@ YAMLHead.prototype.write = function(data) {
     var pos = this.data.search(this._sep);
     if (pos !== -1) {
       try {
+        var matches = this.data.match(this._sep);
         var header = this.data.substr(0, pos);
-        this.data = this.data.substr(pos);
+        this.data = this.data.substr(pos + matches[0].length);
         this.header = yaml.load(header);
         this.emit('header', this.header);
         this.emit('data', this.data);
       }
       catch (err) {
+        if (this.callback) {
+          this.callback(err);
+        }
         this.emit('error', err);
         this.end();
         this.emit('end');
-        if (this.callback) {
-          callback(err);
-        }
       }
     }
   }
