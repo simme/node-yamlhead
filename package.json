@@ -1,6 +1,6 @@
 {
   "name": "yamlhead",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Extract YAML headers from random (not really random) files.",
   "main": "yamlhead.js",
   "scripts": {
