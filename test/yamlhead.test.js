@@ -60,5 +60,13 @@ suite('YAMLHead', function () {
       done();
     });
   });
+
+  test('Handles Jekyll files.', function (done) {
+    yamlhead(__dirname + '/jekyllstyle.md', function (err, yaml, data) {
+      assert.equal(yaml.title, 'This is Jekyll-style');
+      assert.equal(data, 'Here is the content.');
+      done();
+    });
+  });
 });
 
