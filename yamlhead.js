@@ -46,6 +46,10 @@ YAMLHead.prototype.write = function(data) {
   this.data += data;
   // Check for YAML header separator.
   if (!this.header) {
+    // Handle Jekyll-style triple dashes at the beginning of the file
+    if (this.data.substr(0, 4) === "---\n") {
+      this.data = this.data.substr(4);
+    }
     var pos = this.data.search(this._sep);
     if (pos !== -1) {
       try {
