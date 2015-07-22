@@ -56,7 +56,7 @@ YAMLHead.prototype.write = function(data) {
         var matches = this.data.match(this._sep);
         var header = this.data.substr(0, pos);
         this.data = this.data.substr(pos + matches[0].length);
-        this.header = yaml.load(header);
+        this.header = yaml.safeLoad(header);
         this.emit('header', this.header);
         this.emit('data', this.data);
       }
